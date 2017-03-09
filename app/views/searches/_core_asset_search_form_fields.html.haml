@@ -104,7 +104,8 @@
       .col-md-3
         %fieldset
           %legend.panel-legend Important Dates & Years
-          = f.input :in_service_date, :wrapper => :vertical_prepend, :label => "In Service Date" do
+
+          = f.input :in_service_date, :wrapper => :vertical_append, :label => "In Service Date" do
             .input-group-btn
               %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
               %ul.dropdown-menu{:role => "menu"}
@@ -113,7 +114,10 @@
                 %li
                   %a{:data => {:compare => "1"}} After
               = f.input_field :in_service_date_comparator, :as => :hidden, :value => '1'
-            = f.date_field :in_service_date, :class => "form-control"
+            = f.input_field :in_service_date, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.in_service_date)
+            %span.input-group-addon
+              %i.fa.fa-calendar
+
           = f.input :purchase_date, :wrapper => :vertical_prepend, :label => "Purchase Date" do
             .input-group-btn
               %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
@@ -123,7 +127,11 @@
                 %li
                   %a{:data => {:compare => "1"}} After
               = f.input_field :purchase_date_comparator, :as => :hidden, :value => '1'
-            = f.date_field :purchase_date, :class => "form-control"
+            = f.input_field :purchase_date, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.purchase_date)
+            %span.input-group-addon
+              %i.fa.fa-calendar
+
+
           = f.input :disposition_date, :wrapper => :vertical_prepend, :label => "Disposition Date" do
             .input-group-btn
               %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
@@ -132,8 +140,11 @@
                   %a{:data => {:compare => "-1"}} Before
                 %li
                   %a{:data => {:compare => "1"}} After
-              = f.input_field :disposition_date_comparator, :as => :hidden, :value => '1'
-            = f.date_field :disposition_date, :class => "form-control"
+                = f.input_field :disposition_date_comparator, :as => :hidden, :value => '1'
+              = f.input_field :disposition_date, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.disposition_date)
+              %span.input-group-addon
+                %i.fa.fa-calendar
+
           = f.input :scheduled_replacement_year, :label => "Scheduled Replacement Year", :wrapper => :vertical_prepend do
             .input-group-btn
               %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
@@ -145,7 +156,10 @@
                 %li
                   %a{:data => {:compare => "1"}} After
               = f.input_field :scheduled_replacement_year_comparator, :as => :hidden, :value => '0'
-            = f.input_field :scheduled_replacement_year, :collection => get_fiscal_years, :class => "form-control"
+            = f.input_field :scheduled_replacement_year, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.scheduled_replacement_year)
+            %span.input-group-addon
+              %i.fa.fa-calendar
+
           = f.input :policy_replacement_year, :wrapper => :vertical_prepend, :label => "Policy Replacement Year" do
             .input-group-btn
               %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
@@ -156,8 +170,12 @@
                   %a{:data => {:compare => "0"}} During
                 %li
                   %a{:data => {:compare => "1"}} After
-              = f.input_field :policy_replacement_year_comparator, :as => :hidden, :value => '0'
-            = f.input_field :policy_replacement_year, :collection => get_fiscal_years, :class => "form-control"
+                = f.input_field :policy_replacement_year_comparator, :as => :hidden, :value => '0'
+              = f.input_field :policy_replacement_year, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.policy_replacement_year)
+              %span.input-group-addon
+                %i.fa.fa-calendar
+
+          -#  TODO this probably shouldn't be here since it isn't exactly common
           .vehicle-related-only
             = f.input :rebuild_year, :wrapper => :vertical_prepend, :label => "Rebuild Year (Vehicles Only)" do
               .input-group-btn
@@ -170,7 +188,9 @@
                   %li
                     %a{:data => {:compare => "1"}} After
                 = f.input_field :rebuild_year_comparator, :as => :hidden, :value => '0'
-              = f.input_field :rebuild_year, :collection => get_all_fiscal_years, :class => "form-control"
+              = f.input_field :rebuild_year, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.rebuild_year)
+              %span.input-group-addon
+                %i.fa.fa-calendar
 
         - view_component = "app_core_asset_search_form_common_fields"
         - if lookup_context.template_exists?(view_component, 'searches', true)
