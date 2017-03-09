@@ -140,10 +140,10 @@
                   %a{:data => {:compare => "-1"}} Before
                 %li
                   %a{:data => {:compare => "1"}} After
-                = f.input_field :disposition_date_comparator, :as => :hidden, :value => '1'
-              = f.input_field :disposition_date, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.disposition_date)
-              %span.input-group-addon
-                %i.fa.fa-calendar
+              = f.input_field :disposition_date_comparator, :as => :hidden, :value => '1'
+            = f.input_field :disposition_date, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.disposition_date)
+            %span.input-group-addon
+              %i.fa.fa-calendar
 
           = f.input :scheduled_replacement_year, :label => "Scheduled Replacement Year", :wrapper => :vertical_prepend do
             .input-group-btn
@@ -170,10 +170,10 @@
                   %a{:data => {:compare => "0"}} During
                 %li
                   %a{:data => {:compare => "1"}} After
-                = f.input_field :policy_replacement_year_comparator, :as => :hidden, :value => '0'
-              = f.input_field :policy_replacement_year, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.policy_replacement_year)
-              %span.input-group-addon
-                %i.fa.fa-calendar
+              = f.input_field :policy_replacement_year_comparator, :as => :hidden, :value => '0'
+            = f.input_field :policy_replacement_year, :as => :string, :class => 'form-control datepicker', :data => {'behavior' => 'datepicker'}, :value => format_as_date(f.object.policy_replacement_year)
+            %span.input-group-addon
+              %i.fa.fa-calendar
 
           -#  TODO this probably shouldn't be here since it isn't exactly common
           .vehicle-related-only
