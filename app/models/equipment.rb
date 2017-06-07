@@ -74,6 +74,13 @@ class Equipment < Asset
     a
   end
 
+  def allowable_params
+    a = []
+    a << super
+    a += Equipment.allowable_params
+    a.flatten
+  end
+
   def searchable_fields
     a = []
     a << super

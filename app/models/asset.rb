@@ -999,6 +999,10 @@ class Asset < ActiveRecord::Base
     SEARCHABLE_FIELDS
   end
 
+  def allowable_params
+    Asset.allowable_params
+  end
+
   def update_methods
     a = []
     a << super rescue nil # Must call super in case an engine includes updates above Asset
