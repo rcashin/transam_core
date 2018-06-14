@@ -280,6 +280,7 @@ class AssetsController < AssetAwareController
     end
 
     respond_to do |format|
+      puts form_params
       if @asset.update_attributes(form_params)
 
         # If the asset was successfully updated, schedule update the condition and disposition asynchronously

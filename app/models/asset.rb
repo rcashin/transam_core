@@ -1153,6 +1153,16 @@ class Asset < ActiveRecord::Base
     return typed_asset.transfer new_organization_id
   end
 
+  def update_attrbutes params 
+    puts self.id 
+    puts params
+    puts '----------------'
+    super 
+    return 
+    #params.each do |param|
+    #  self.send(param[0], params[1])
+    #end
+  end
 
 
   #-----------------------------------------------------------------------------
