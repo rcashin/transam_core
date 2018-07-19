@@ -12,7 +12,7 @@ class SendMessageAsEmailJob < Job
   def run    
     message = Message.find_by_object_key(object_key)
     if message
-      UserMailer.email_message(message).deliver      
+      UserMailer.email_message(message).deliver_now     
     else
       raise RuntimeError, "Can't find Message with object_key #{object_key}"
     end

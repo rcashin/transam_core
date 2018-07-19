@@ -26,6 +26,6 @@ class NewUserService
 
     user.update_user_organization_filters
 
-    UserMailer.send_email_on_user_creation(user).deliver
+    UserMailer.send_email_on_user_creation(user).deliver_now
   end
 end

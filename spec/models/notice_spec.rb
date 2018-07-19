@@ -39,7 +39,7 @@ RSpec.describe Notice, :type => :model do
   describe '.system_level_notices' do
     it 'returns notices with no organization set' do
       expect{
-        FactoryGirl.create(:system_notice)
+        FactoryBot.create(:system_notice)
         }.to change{Notice.system_level_notices.count}.by(1)
     end
   end
@@ -47,8 +47,8 @@ RSpec.describe Notice, :type => :model do
   describe '.active_for_organizations' do
     it 'returns system notices and organization-specific notices' do
       expect{
-        FactoryGirl.create(:system_notice)
-        FactoryGirl.create(:notice, organization: organization)
+        FactoryBot.create(:system_notice)
+        FactoryBot.create(:notice, organization: organization)
       }.to change{Notice.active_for_organizations([organization]).count}.by(2) # 1 for system, 1 for organization
     end
   end
