@@ -38,7 +38,7 @@ class CommentsController < NestedResourceController
     respond_to do |format|
       if @comment.save
         notify_user(:notice, 'Comment was successfully created.')
-        format.html { redirect_to :back }
+        format.html { redirect_back }
         format.json { render action: 'show', status: :created, location: @comment }
       else
         format.html { render action: 'new' }
@@ -74,7 +74,7 @@ class CommentsController < NestedResourceController
 
     notify_user(:notice, 'Comment was successfully removed.')
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_back }
       format.json { head :no_content }
     end
   end

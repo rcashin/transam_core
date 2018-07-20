@@ -32,7 +32,7 @@ class AssetsController < AssetAwareController
     end
 
     # Always display the last view
-    redirect_to :back
+    redirect_back
   end
 
   # Removes the asset from the specified group
@@ -50,7 +50,7 @@ class AssetsController < AssetAwareController
     end
 
     # Always display the last view
-    redirect_to :back
+    redirect_back
   end
 
   def parent
