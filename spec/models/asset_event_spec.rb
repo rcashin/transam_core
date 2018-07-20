@@ -85,7 +85,9 @@ RSpec.describe AssetEvent, :type => :model do
     test_asset_event.asset.update!(:purchased_new => false)
     params = {:event_date => Date.today - 2.years, :asset => test_asset_event.asset, :asset_event_type => test_asset_event.asset_event_type}
     prev_event = create(:asset_event, params)
-
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
+    prev_event.reload
     expect(test_asset_event.previous_event_of_type == AssetEvent.as_typed_event(prev_event)).to be true
 
   end
@@ -93,15 +95,22 @@ RSpec.describe AssetEvent, :type => :model do
   it 'can find next events' do
     params = {:event_date => Date.today + 2.years, :asset => test_asset_event.asset, :asset_event_type => test_asset_event.asset_event_type}
     next_event = create(:asset_event, params)
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
+    next_event.reload
 
     expect(test_asset_event.next_event_of_type == AssetEvent.as_typed_event(next_event)).to be true
   end
 
   it 'has no previous event when its the only event' do
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
     expect(test_asset_event.previous_event_of_type.nil?).to be true
   end
 
   it 'has no next event when its the only event' do
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
     expect(test_asset_event.next_event_of_type.nil?).to be true
   end
 
@@ -109,7 +118,9 @@ RSpec.describe AssetEvent, :type => :model do
     params = {:asset => test_asset_event.asset, :asset_event_type => test_asset_event.asset_event_type}
     params["created_at"] = test_asset_event.created_at + 2.seconds
     event_created_two_seconds_later = create(:asset_event, params)
-
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
+    event_created_two_seconds_later.reload
     expect(event_created_two_seconds_later.previous_event_of_type == AssetEvent.as_typed_event(test_asset_event)).to be true
   end
 
@@ -125,6 +136,8 @@ RSpec.describe AssetEvent, :type => :model do
     params = {:event_date => Date.today + 1.year,:asset => test_asset_event.asset, :asset_event_type => test_asset_event.asset_event_type}
     build_stubbed(:asset_event, params)
 
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
     expect(test_asset_event.previous_event_of_type.nil?).to be true
   end
 
@@ -132,12 +145,16 @@ RSpec.describe AssetEvent, :type => :model do
     params = {:event_date => Date.today - 1.year,:asset => test_asset_event.asset, :asset_event_type => test_asset_event.asset_event_type}
     build_stubbed(:asset_event, params)
 
+    # Reload to sync created_at fractional times to db values
+    test_asset_event.reload
     expect(test_asset_event.next_event_of_type.nil?).to be true
   end
 
   it 'returns only previous events of the same type as the caller' do
       bus = test_asset_event.asset
       bus.disposition_updates.create(attributes_for(:disposition_update_event, :event_date => Date.today - 10.years))
+      # Reload to sync created_at fractional times to db values
+      test_asset_event.reload
       previous_event = test_asset_event.previous_event_of_type
 
       expect(previous_event).to be_nil

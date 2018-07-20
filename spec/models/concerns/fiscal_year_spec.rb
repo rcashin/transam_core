@@ -120,8 +120,9 @@ RSpec.describe FiscalYear do
       (2014..current_planning_yr+4).each do |yr|
         results << ["FY #{(yr-2000).to_s}-#{(yr-2000+1).to_s}", yr]
       end
-      expect(test_fy_class.get_fiscal_years(test_date1, 6)).to eq(results[1..results.length-1])
-      expect(test_fy_class.get_fiscal_years(test_date2, 7)).to eq(results)
+      years_count = current_planning_yr + 4 - 2014
+      expect(test_fy_class.get_fiscal_years(test_date1, years_count - 1)).to eq(results[1..results.length-1])
+      expect(test_fy_class.get_fiscal_years(test_date2, years_count)).to eq(results)
     end
   end
   it '.get_planning_fiscal_years' do
