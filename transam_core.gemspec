@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
 
   s.add_dependency 'rails', '~> 5.2'
-  s.add_dependency "cancan"
+  s.add_dependency "cancancan"
   s.add_dependency "devise"
   s.add_dependency "rolify", '~> 4.1'
   s.add_dependency "high_voltage"
