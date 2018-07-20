@@ -1,6 +1,6 @@
 class ReportsController < OrganizationAwareController
 
-  before_filter :get_report, :only => [:show, :load]
+  before_action :get_report, :only => [:show, :load]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Reports", :reports_path

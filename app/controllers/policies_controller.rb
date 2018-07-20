@@ -2,7 +2,7 @@ class PoliciesController < OrganizationAwareController
 
   add_breadcrumb "Home", :root_path
 
-  #before_filter :authorize_admin
+  #before_action :authorize_admin
   before_action :get_policy, :except => [:index, :create, :new]
 
 
