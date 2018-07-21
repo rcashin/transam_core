@@ -16,7 +16,7 @@ RSpec.describe AssetEventsController, :type => :controller do
     it 'all events of an asset' do
       bus.asset_events << test_event
       bus.save!
-      get :index, :inventory_id => bus.object_key
+      get :index, params: {inventory_id: bus.object_key}
 
       expect(assigns(:filter_type)).to eq(0)
       expect(assigns(:page_title)).to eq("#{bus.name}: History")
@@ -27,7 +27,7 @@ RSpec.describe AssetEventsController, :type => :controller do
       test_event2 = create(:asset_event, :asset_event_type_id => 2)
       bus.asset_events << test_event2
       bus.save!
-      get :index, :inventory_id => bus.object_key, :filter_type => test_event.asset_event_type.id
+      get :index, params: {inventory_id: bus.object_key, filter_type: test_event.asset_event_type.id}
 
       expect(assigns(:filter_type)).to eq(test_event.asset_event_type.id)
       expect(assigns(:page_title)).to eq("#{bus.name}: History")
@@ -36,7 +36,7 @@ RSpec.describe AssetEventsController, :type => :controller do
     end
   end
   it 'GET new' do
-    get :new, :inventory_id => bus.object_key, :event_type => 1
+    get :new, params: {inventory_id: bus.object_key, event_type: 1}
 
     expect(assigns(:asset)).to eq(Asset.get_typed_asset(bus))
     expect(assigns(:asset_event).to_json).to eq(ConditionUpdateEvent.new(:asset_event_type_id => 1, :asset_id => bus.id).to_json)
@@ -44,7 +44,7 @@ RSpec.describe AssetEventsController, :type => :controller do
   it 'GET show' do
     bus.asset_events << test_event
     bus.save!
-    get :show, :inventory_id => bus.object_key, :id => test_event.object_key
+    get :show, params: {inventory_id: bus.object_key, id: test_event.object_key}
 
     expect(assigns(:asset)).to eq(Asset.get_typed_asset(bus))
     expect(assigns(:asset_event)).to eq(AssetEvent.as_typed_event(test_event))
@@ -52,7 +52,7 @@ RSpec.describe AssetEventsController, :type => :controller do
   it 'GET edit' do
     bus.asset_events << test_event
     bus.save!
-    get :edit, :inventory_id => bus.object_key, :id => test_event.object_key
+    get :edit, params: {inventory_id: bus.object_key, id: test_event.object_key}
 
     expect(assigns(:asset)).to eq(Asset.get_typed_asset(bus))
     expect(assigns(:asset_event)).to eq(AssetEvent.as_typed_event(test_event))
@@ -60,13 +60,13 @@ RSpec.describe AssetEventsController, :type => :controller do
   it 'POST update' do
     bus.asset_events << test_event
     bus.save!
-    post :update, :inventory_id => bus.object_key, :id => test_event.object_key, :asset_event => {:comments => 'test comments2', :event_date => Date.today.strftime('%m/%d/%Y')}
+    post :update, params: {inventory_id: bus.object_key, :id => test_event.object_key, :asset_event => {:comments => 'test comments2', :event_date => Date.today.strftime('%m/%d/%Y')}}
     test_event.reload
 
     expect(test_event.comments).to eq('test comments2')
   end
   it 'POST create' do
-    post :create, :inventory_id => bus.object_key, :event_type => 1, :asset_event => {:event_date => Date.today.strftime('%m/%d/%Y')}
+    post :create, params: {inventory_id: bus.object_key, :event_type => 1, :asset_event => {:event_date => Date.today.strftime('%m/%d/%Y')}}
     bus.reload
 
     expect(bus.asset_events.count).to eq(1)
@@ -74,7 +74,7 @@ RSpec.describe AssetEventsController, :type => :controller do
   it 'DELETE destroy' do
     bus.asset_events << test_event
     bus.save!
-    delete :destroy, :inventory_id => bus.object_key, :id => test_event.object_key
+    delete :destroy, params: {inventory_id: bus.object_key, :id => test_event.object_key}
 
     expect(AssetEvent.find_by(:object_key => test_event.object_key)).to be nil
   end
@@ -88,12 +88,12 @@ RSpec.describe AssetEventsController, :type => :controller do
 
     it 'fire workflow event' do
       expect{
-        get :fire_workflow_event, :inventory_id => bus.object_key, :id => early_disp_event.object_key, :event => 'approve'
+        get :fire_workflow_event, params: {inventory_id: bus.object_key, :id => early_disp_event.object_key, :event => 'approve'}
         }.to change {WorkflowEvent.count}.by(1)
     end
 
     it 'refresh current page' do 
-      get :fire_workflow_event, :inventory_id => bus.object_key, :id => early_disp_event.object_key, :event => 'approve'
+      get :fire_workflow_event, params: {inventory_id: bus.object_key, :id => early_disp_event.object_key, :event => 'approve'}
 
       expect(response).to redirect_to(root_path)
     end
@@ -102,7 +102,7 @@ RSpec.describe AssetEventsController, :type => :controller do
       bus.asset_events << early_disp_event
       bus.save!
 
-      get :fire_workflow_event, :inventory_id => bus.object_key, :id => early_disp_event.object_key, :event => 'approve_via_transfer'
+      get :fire_workflow_event, params: {inventory_id: bus.object_key, :id => early_disp_event.object_key, :event => 'approve_via_transfer'}
 
       expect(response).to redirect_to(new_inventory_asset_event_path(bus, :event_type => DispositionUpdateEvent.asset_event_type.id, :transferred => '1', :causal_asset_event_id => bus.asset_events.last.object_key,  :causal_asset_event_name => 'approve_via_transfer'))
     end

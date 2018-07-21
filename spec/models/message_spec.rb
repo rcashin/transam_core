@@ -30,12 +30,12 @@ RSpec.describe Message, :type => :model do
       msg.save
       m2 = msg.responses.build(attributes_for(:message))
       m2.user = user2
-      m2.to_user user1
+      m2.to_user = user1
       m2.organization = msg.organization
       m2.save
       m3= m2.responses.build(attributes_for(:message))
       m3.user = user1
-      m3.to_user user2
+      m3.to_user = user2
       m3.organization = msg.organization
       m3.save
 

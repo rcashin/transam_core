@@ -76,7 +76,7 @@ class TasksController < NestedResourceController
       notify_user(:alert, "#{params[:event_name]} is not a valid event for a #{@task.class.name}")
     end
 
-    redirect_back
+    redirect_back fallback_location: root_path
 
   end
 
@@ -91,7 +91,7 @@ class TasksController < NestedResourceController
       notify_user(:notice, "Task is now assigned to #{user}")
     end
 
-    redirect_back
+    redirect_back fallback_location: root_path
 
   end
 
@@ -233,7 +233,7 @@ class TasksController < NestedResourceController
     @task.destroy
     notify_user(:notice, "Task was successfully removed.")
     respond_to do |format|
-      format.html { redirect_back }
+      format.html { redirect_back fallback_location: root_path }
       format.json { head :no_content }
     end
   end

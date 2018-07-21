@@ -55,7 +55,7 @@ class MessagesController < OrganizationAwareController
     end
 
     # No response needed
-    render :nothing => true
+    render body: current_user
 
   end
 
