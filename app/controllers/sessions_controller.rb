@@ -45,7 +45,7 @@ class SessionsController < Devise::SessionsController
   end 
 
   def failed_login?
-    (options = env["warden.options"]) && options[:action] == "unauthenticated"
+    (options = request.env["warden.options"]) && options[:action] == "unauthenticated"
   end 
   
   def log_logout

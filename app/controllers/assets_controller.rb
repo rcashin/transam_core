@@ -32,7 +32,7 @@ class AssetsController < AssetAwareController
     end
 
     # Always display the last view
-    redirect_back
+    redirect_back fallback_location: root_path
   end
 
   # Removes the asset from the specified group
