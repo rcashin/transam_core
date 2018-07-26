@@ -1,3 +1,3 @@
 module TransamCore
-  VERSION = "0.9.22-sims"
+  VERSION = "0.10.0-sims"
 end
