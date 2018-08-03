@@ -183,7 +183,7 @@ lookup_tables.each do |table_name|
   elsif is_sqlite
     ActiveRecord::Base.connection.execute("DELETE FROM #{table_name};")
   else
-    ActiveRecord::Base.connection.execute("TRUNCATE #{table_name} RESTART IDENTITY;")
+    ActiveRecord::Base.connection.execute("TRUNCATE #{table_name} RESTART IDENTITY CASCADE;")
   end
   data = eval(table_name)
   klass = table_name.classify.constantize
