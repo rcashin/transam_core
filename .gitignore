@@ -27,3 +27,4 @@ rerun.txt
 TAGS
 *.rb~
 *.haml~
+*.erb~
