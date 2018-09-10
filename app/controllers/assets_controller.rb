@@ -340,8 +340,6 @@ class AssetsController < AssetAwareController
     end
 
     # No response needed
-    render :nothing => true
-
   end
 
   # Called via AJAX to get dynamic content via AJAX
