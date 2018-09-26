@@ -7,7 +7,7 @@
 mysql: &mysql
   adapter: mysql2
   username: root
-  password: myqwaz1!
+  password: 
   database: transam_core
 
 # postgresql: &postgresql
